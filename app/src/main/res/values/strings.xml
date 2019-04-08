@@ -3,7 +3,6 @@
     <string name="illuminance">Illuminance</string>
     <string name="air_temperature">Air Temperature</string>
     <string name="relative_humidity">Relative Humidity</string>
-    <string name="absolute_humidity">Absolute Humidity</string>
     <string name="air_pressure">Air Pressure</string>
-    <string name="estimate_power">Estimate Power</string>
+    <string name="estimate_power">Estimated Power From Sunlight</string>
 </resources>
