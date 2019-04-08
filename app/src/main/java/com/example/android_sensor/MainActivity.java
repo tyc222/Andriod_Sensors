@@ -8,6 +8,8 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.EventLog;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -26,11 +28,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView airPressureView;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_items, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.exit) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setTitle("Android Sensors");
+
+
 
         // Find views
         lightView = findViewById(R.id.illuminance);
@@ -78,22 +97,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         switch (type) {
             case Sensor.TYPE_LIGHT:
-                lightView.setText(String.valueOf(event.values[0]));
+                lightView.setText(String.valueOf(event.values[0]) + " lx");
                 double irradiance = event.values[0] *0.0079;
                 DecimalFormat f = new DecimalFormat("##.00");
-                powerView.setText(String.valueOf(f.format(irradiance)));
+                powerView.setText(String.valueOf(f.format(irradiance)) + " W/m^2");
                 break;
 
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                temperatureView.setText(String.valueOf(event.values[0]));
+                temperatureView.setText(String.valueOf(event.values[0]) + " °C");
                 break;
 
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                relativeHumidityView.setText(String.valueOf(event.values[0]));
+                relativeHumidityView.setText(String.valueOf(event.values[0]) + " %");
                 break;
 
             case Sensor.TYPE_PRESSURE:
-                airPressureView.setText(String.valueOf(event.values[0]));
+                airPressureView.setText(String.valueOf(event.values[0]) + " hPa");
                 break;
         }
 

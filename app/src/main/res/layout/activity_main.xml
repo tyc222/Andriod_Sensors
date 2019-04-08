@@ -5,77 +5,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="24dp"
+
     tools:context=".MainActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight=".25"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/illuminance" />
+            android:textColor="@android:color/white"
+            android:text="@string/illuminance"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/illuminance"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="18sp"
             android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight=".25"
+
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/estimate_power" />
+            android:text="@string/estimate_power"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/estimate_power"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="16sp"
             android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight=".25"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/air_temperature" />
+            android:text="@string/air_temperature"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/air_temperature"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="16sp"
             android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight=".25"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/relative_humidity" />
+            android:text="@string/relative_humidity"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/relative_humidity"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="16sp"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -83,18 +106,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight=".25"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/air_pressure" />
+            android:text="@string/air_pressure"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/air_pressure"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="16sp"
             android:layout_weight="1" />
     </LinearLayout>
 </LinearLayout>
