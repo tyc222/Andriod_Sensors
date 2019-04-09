@@ -6,4 +6,6 @@
     <string name="air_pressure">Air Pressure</string>
     <string name="estimate_power">Estimated Power From Sunlight</string>
     <string name="exit">Exit</string>
+    <string name="estimated_power_charge_otohtr">Estimated Power Charge (OTOHTR)</string>
+    <string name="reset">Reset</string>
 </resources>
