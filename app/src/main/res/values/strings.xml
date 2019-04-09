@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android_Sensor</string>
+    <string name="app_name">Android Environmental Sensors</string>
     <string name="illuminance">Illuminance</string>
     <string name="air_temperature">Air Temperature</string>
     <string name="relative_humidity">Relative Humidity</string>

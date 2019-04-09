@@ -16,17 +16,22 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
+    // Create SensorManager and Sensors
     private SensorManager sensorManager;
     private Sensor light;
     private Sensor temperature;
     private Sensor relativeHumidity;
     private Sensor airPressure;
+    //Create TextViews
     private TextView lightView;
     private TextView powerView;
     private TextView temperatureView;
     private TextView relativeHumidityView;
     private TextView airPressureView;
 
+    /**
+    Menu options
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_items, menu);
@@ -47,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Android Sensors");
+        // Set App Title
+        setTitle("Android Environmental Sensors");
 
 
 
@@ -70,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         airPressure = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
+
+        // Check if device support sensor, if not, let the user know
         if (light == null) {
         lightView.setText("This device doesn't support light sensor!");
         powerView.setText("This device doesn't support power estimation");
@@ -90,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
 
+    /**
+     * When Sensor senses sth, display that data
+     * @param event
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
 
@@ -125,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    /**
+     * Register Sensor Listeners onResume
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -134,6 +149,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager.registerListener(this, airPressure, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
+    /**
+     * Unregister Listener to save battery and resource
+     */
     @Override
     protected void onPause() {
         super.onPause();
