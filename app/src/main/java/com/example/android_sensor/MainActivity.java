@@ -5,14 +5,21 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.EventLog;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import java.sql.Time;
 import java.text.DecimalFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -28,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView temperatureView;
     private TextView relativeHumidityView;
     private TextView airPressureView;
+    private TextView powerChargedView;
+
+    double powerReceived;
+    boolean pause;
+    private Timer timer;
 
     /**
     Menu options
@@ -48,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Cancel timer
+        timer.cancel();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -55,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Set App Title
         setTitle("Android Environmental Sensors");
 
-
+        // Initiate timer
+        timer = new Timer();
 
         // Find views
         lightView = findViewById(R.id.illuminance);
@@ -63,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         temperatureView= findViewById(R.id.air_temperature);
         relativeHumidityView = findViewById(R.id.relative_humidity);
         airPressureView = findViewById(R.id.air_pressure);
+        powerChargedView = findViewById(R.id.estimate_power_OTOHTR);
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
@@ -81,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (light == null) {
         lightView.setText("This device doesn't support light sensor!");
         powerView.setText("This device doesn't support power estimation");
+        powerChargedView.setText("This device doesn't support power estimation");
         }
 
         if (temperature == null){
@@ -109,10 +131,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         switch (type) {
             case Sensor.TYPE_LIGHT:
+                // Lux
                 lightView.setText(String.valueOf(event.values[0]) + " lx");
                 double irradiance = event.values[0] *0.0079;
-                DecimalFormat f = new DecimalFormat("##.00");
+                DecimalFormat f = new DecimalFormat("#0.00");
+                // Estimate power
                 powerView.setText(String.valueOf(f.format(irradiance)) + " W/m^2");
+                // Estimate charged power
+                powerReceived = irradiance * (0.04 * 0.08);
+
+                pause = false;
+                setTimerTask();
+
                 break;
 
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
@@ -157,5 +187,66 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onPause();
         sensorManager.unregisterListener(this);
     }
+
+    public void pause(View view) {
+        pause=true;
+        timer.cancel();
+        timer.purge();
+    }
+
+    private void setTimerTask() {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;
+                updatePowerHandler.sendMessage(message);
+            }
+        }, 0, 1000);
+    }
+
+    private Handler updatePowerHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int msgId = msg.what;
+            switch (msgId){
+                case 1:
+                    powerReceived  = powerReceived + powerReceived;
+                    DecimalFormat f = new DecimalFormat("#0.00");
+                    powerChargedView.setText(String.valueOf(f.format(powerReceived)));
+                break;
+            }
+
+        }
+    };
+
+//    Runnable updater;
+//    private void updateTime( ) {
+//        final Handler timerHandler = new Handler();
+//
+//        if (!pause) {
+//
+//            updater = new Runnable() {
+//                @Override
+//                public void run() {
+//                    powerReceived  = powerReceived + powerReceived;
+//                    DecimalFormat f = new DecimalFormat("#0.00");
+//                    powerChargedView.setText(String.valueOf(f.format(powerReceived)));
+//                    timerHandler.postDelayed(updater, 1000);
+//                }
+//            };
+//            timerHandler.post(updater);
+//        }
+//        if (pause){
+//            timerHandler.removeCallbacks(updater);
+//
+//
+//        }
+//    }
+
+
+
+
 
 }
