@@ -232,6 +232,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 });
             }
         };
-        timer.schedule(timerTask, 1000, 1000);
+        timer.schedule(timerTask, 50, 1000);
     }
 }
