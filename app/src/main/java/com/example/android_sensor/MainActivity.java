@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         powerStored = powerReceived + powerReceived;
                         powerCharged = powerStored + powerCharged;
                         DecimalFormat f = new DecimalFormat("#0.00");
-                        powerChargedView.setText(String.valueOf(f.format(powerCharged)));
+                        powerChargedView.setText(String.valueOf(f.format(powerCharged)) + " watt-second");
                     }
                 });
             }
