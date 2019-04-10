@@ -8,4 +8,5 @@
     <string name="exit">Exit</string>
     <string name="estimated_power_charge_otohtr">Estimated Power Charge (OTOHTR)</string>
     <string name="pause">Pause</string>
+    <string name="reset_power_charged">Reset Power Charged</string>
 </resources>

@@ -86,11 +86,13 @@
             android:layout_weight="5" />
 
         <Button
+            android:id="@+id/pauseButton"
             android:layout_width="0in"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
             android:layout_weight="2"
-            android:text="@string/pause"
-            android:onClick="pause"/>
+            android:text="Start Resume"
+            />
         </LinearLayout>
     </LinearLayout>
 
