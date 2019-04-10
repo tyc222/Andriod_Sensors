@@ -227,7 +227,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         powerCharged = powerStored + powerCharged;
                         DecimalFormat f = new DecimalFormat("#0.00");
                         powerChargedView.setText(String.valueOf(f.format(powerCharged)) + " watt-second");
-                        secondsChargedView.setText(secondCharged + " sec");
+                        if (secondCharged < 60){
+                            secondsChargedView.setText(secondCharged + " sec(s)");
+                        }
+                        if (secondCharged >= 60){
+                            secondsChargedView.setText(secondCharged/60 + ":" + secondCharged%60 +" min(s)");
+                        }
+                        if (secondCharged >= 3600){
+                            secondsChargedView.setText(secondCharged/3600 + ":" + secondCharged%60 + ":" + (secondCharged%60)/60 + " hr(s)");
+                        }
                     }
                 });
             }
