@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     double powerReceived;
     double powerCharged;
     double powerStored;
+    int secondCharged;
     // Initiate timer
     Timer timer;
     // Logic for pauseButton
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView relativeHumidityView;
     private TextView airPressureView;
     private TextView powerChargedView;
+    private TextView secondsChargedView;
 
     /**
      * Menu options
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         relativeHumidityView = findViewById(R.id.relative_humidity);
         airPressureView = findViewById(R.id.air_pressure);
         powerChargedView = findViewById(R.id.estimate_power_OTOHTR);
+        secondsChargedView = findViewById(R.id.secondsCharged);
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
@@ -219,10 +222,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        secondCharged++;
                         powerStored = powerReceived + powerReceived;
                         powerCharged = powerStored + powerCharged;
                         DecimalFormat f = new DecimalFormat("#0.00");
                         powerChargedView.setText(String.valueOf(f.format(powerCharged)) + " watt-second");
+                        secondsChargedView.setText(secondCharged + " sec");
                     }
                 });
             }
