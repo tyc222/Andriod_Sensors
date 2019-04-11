@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                             secondsChargedView.setText(secondCharged/60 + ":" + secondCharged%60 +" min(s)");
                         }
                         if (secondCharged >= 3600){
-                            secondsChargedView.setText(secondCharged/3600 + ":" + secondCharged%60 + ":" + (secondCharged%60)/60 + " hr(s)");
+                            secondsChargedView.setText(secondCharged/3600 + ":" + (secondCharged/60)%60 + ":" + secondCharged%60 + " hr(s)");
                         }
                     }
                 });
