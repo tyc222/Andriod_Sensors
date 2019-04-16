@@ -85,9 +85,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    final String userName = nameEditText.getText().toString();
 
-                    Toast.makeText(MainActivity.this, android.os.Build.MODEL + "  " +
-                            nameEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+                    GSpreadSheetPush.addItemToSheet(MainActivity.this, userName, String.valueOf(powerCharged), String.valueOf(secondCharged));
+
                     dialog.dismiss();
                 }
             });
