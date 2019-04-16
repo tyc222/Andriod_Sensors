@@ -1,6 +1,7 @@
 package com.example.android_sensor;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -8,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.EventLog;
@@ -15,7 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Time;
 import java.text.DecimalFormat;
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor temperature;
     private Sensor relativeHumidity;
     private Sensor airPressure;
-    //Create TextViews
+    // Create TextViews
     private TextView lightView;
     private TextView powerView;
     private TextView temperatureView;
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView airPressureView;
     private TextView powerChargedView;
     private TextView secondsChargedView;
+    // Create EditText
+    private EditText nameEditText;
 
     /**
      * Menu options
@@ -68,6 +74,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (powerChargedView != null && secondsChargedView != null) {
             this.recreate();
             }
+        } else if (id == R.id.saveData) {
+            //Save charged information to GSpreadSheet
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.save_confirmation);
+            builder.setIcon(android.R.drawable.ic_menu_save);
+            builder.setMessage(R.string.enter_your_name);
+            nameEditText = new EditText(this);
+            builder.setView(nameEditText);
+            builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Toast.makeText(MainActivity.this, android.os.Build.MODEL + "  " +
+                            nameEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
         }
         return super.onOptionsItemSelected(item);
     }

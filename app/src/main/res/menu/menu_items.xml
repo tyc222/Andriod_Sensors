@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/saveData"
+        android:title="@string/save_power_charged"/>
+
+    <item
         android:id="@+id/restTimer"
         android:title="@string/reset_power_charged" />
     <item

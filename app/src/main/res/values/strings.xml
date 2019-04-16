@@ -9,4 +9,8 @@
     <string name="estimated_power_charge_otohtr">Estimated Power Charge (OTOHTR)</string>
     <string name="pause">Pause</string>
     <string name="reset_power_charged">Reset Power Charged</string>
+    <string name="save_power_charged">Save Power Charged</string>
+    <string name="enter_your_name">Enter Your Name:</string>
+    <string name="save_confirmation">Save Confirmation</string>
+    <string name="confirm">Confirm</string>
 </resources>
