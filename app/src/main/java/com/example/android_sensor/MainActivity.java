@@ -65,8 +65,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             finish();
         } else if (id ==R.id.restTimer) {
             //Restart the activity
-            timer.cancel();
+            if (powerChargedView != null && secondsChargedView != null) {
             this.recreate();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -211,7 +212,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        timer.cancel();
     }
 
     private void setTimerTask() {
