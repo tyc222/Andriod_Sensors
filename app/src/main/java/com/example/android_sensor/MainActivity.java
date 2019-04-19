@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                     String action = "addItem";
 
+                    // Use addItemToSheet method from GSpreadSheetPush class
                     GSpreadSheetPush.addItemToSheet(MainActivity.this, action, userName, String.valueOf(powerCharged), String.valueOf(secondCharged));
 
                     dialog.dismiss();
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
 
+                // if uploadButton is press
                 if (uploadPressed){
                     uploadButton.setText("Stop Upload");
 
@@ -162,8 +164,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         public void onClick(DialogInterface dialog, int which) {
                             final String userName = nameEditText.getText().toString();
                             String updateInterval = intervalEditText.getText().toString();
-                            final String action = "autoAddItem";
 
+                            // use this for the Google App Script to know which function to use
+                            final String action = "autoAddItem";
 
                             // Default Update Interval
                             if (updateInterval.isEmpty()){
@@ -179,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
+
                                                 GSpreadSheetPush.addItemToSheet(MainActivity.this, action, userName, String.valueOf(powerCharged), String.valueOf(secondCharged));
                                             }
                                         });
@@ -197,9 +201,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         }
                     });
                     builder.create().show();
-
-
                 }
+
+                //if uploadButton is unpressed
                 else if (!uploadPressed) {
                     uploadPressed = true;
                    uploadTimer.cancel();
@@ -293,7 +297,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     /**

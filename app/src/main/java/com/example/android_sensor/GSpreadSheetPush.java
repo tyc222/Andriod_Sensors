@@ -26,20 +26,25 @@ public class GSpreadSheetPush {
   */
 
 public static void addItemToSheet(final Context context, String uAction, String uName, String ePowerCharged, String tCalculated) {
+    // Parameters
     final String phoneManufacture = Build.MANUFACTURER;
     final String deviceName = Build.MODEL;
     final String uploadAction = uAction;
     final String userName = uName;
     final String estimatedPowerCharged = ePowerCharged;
     final String timeCalculated = tCalculated;
+    // Instantiate progress dialog
     ProgressDialog loading = null;
 
+    // Condition to determine if it's a save or timer upload to decide whether to show a Progress dialog or not
     if (uploadAction == "addItem") {
             loading = ProgressDialog.show(context, "Saving Data", "Please wait");
     }
 
+    // Must declare final for the function to use
     final ProgressDialog finalLoading = loading;
 
+    // Request access to POST value to GSheet through google app script
     StringRequest stringRequest = new StringRequest(Request.Method.POST,
             "https://script.google.com/macros/s/AKfycbxSghDUjSzaSnaq2KDB1-7Twp7CE0ryfHtJjij4XqfNrlBOgYa0/exec",
             new Response.Listener<String>() {
