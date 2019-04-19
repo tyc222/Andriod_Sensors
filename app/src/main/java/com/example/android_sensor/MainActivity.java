@@ -182,7 +182,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            uploadPressed = true;
+                            uploadButton.setText("Start Upload");
                             dialog.dismiss();
                         }
                     });
