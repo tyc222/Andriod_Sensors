@@ -25,28 +25,44 @@ public class GSpreadSheetPush {
  * This is where data is transferred from your phone to GSheet using HTTP Rest API calls
   */
 
-public static void addItemToSheet(final Context context, String uName, String ePowerCharged, String tCalculated) {
-    final ProgressDialog loading = ProgressDialog.show(context, "Saving Data", "Please wait");
+public static void addItemToSheet(final Context context, String uAction, String uName, String ePowerCharged, String tCalculated) {
     final String phoneManufacture = Build.MANUFACTURER;
     final String deviceName = Build.MODEL;
+    final String uploadAction = uAction;
     final String userName = uName;
     final String estimatedPowerCharged = ePowerCharged;
     final String timeCalculated = tCalculated;
+    ProgressDialog loading = null;
+
+    if (uploadAction == "addItem") {
+            loading = ProgressDialog.show(context, "Saving Data", "Please wait");
+    }
+
+    final ProgressDialog finalLoading = loading;
 
     StringRequest stringRequest = new StringRequest(Request.Method.POST,
             "https://script.google.com/macros/s/AKfycbxSghDUjSzaSnaq2KDB1-7Twp7CE0ryfHtJjij4XqfNrlBOgYa0/exec",
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    loading.dismiss();
-                    Toast.makeText(context, "Saving Succeed", Toast.LENGTH_SHORT).show();
+
+                    if (uploadAction == "addItem") {
+                        finalLoading.dismiss();
+                        Toast.makeText(context, "Saving Succeed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Upload Succeed", Toast.LENGTH_SHORT).show();
+                    }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    loading.dismiss();
-                    Toast.makeText(context, "Saving Failed", Toast.LENGTH_SHORT).show();
+                    if (uploadAction == "addItem") {
+                        finalLoading.dismiss();
+                        Toast.makeText(context, "Saving Failed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Upload Failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }) {
         @Override
@@ -54,7 +70,7 @@ public static void addItemToSheet(final Context context, String uName, String eP
             Map<String, String> parameters = new HashMap<>();
 
             // We pass parameters here
-            parameters.put("action", "addItem");
+            parameters.put("action", uploadAction);
             parameters.put("userName", userName);
             parameters.put("phoneManufacture", phoneManufacture);
             parameters.put("deviceName", deviceName);

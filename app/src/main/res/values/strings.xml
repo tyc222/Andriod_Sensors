@@ -13,4 +13,5 @@
     <string name="enter_your_name">Enter Your Name:</string>
     <string name="save_confirmation">Save Confirmation</string>
     <string name="confirm">Confirm</string>
+    <string name="upload_confirmation">Upload Confirmation</string>
 </resources>

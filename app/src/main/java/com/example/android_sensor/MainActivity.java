@@ -35,8 +35,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     int secondCharged;
     // Initiate timer
     Timer timer;
+    Timer uploadTimer;
     // Logic for pauseButton
     Boolean pressed;
+    Boolean uploadPressed;
     // Create SensorManager and Sensors
     private SensorManager sensorManager;
     private Sensor light;
@@ -87,7 +89,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 public void onClick(DialogInterface dialog, int which) {
                     final String userName = nameEditText.getText().toString();
 
-                    GSpreadSheetPush.addItemToSheet(MainActivity.this, userName, String.valueOf(powerCharged), String.valueOf(secondCharged));
+                    String action = "addItem";
+
+                    GSpreadSheetPush.addItemToSheet(MainActivity.this, action, userName, String.valueOf(powerCharged), String.valueOf(secondCharged));
 
                     dialog.dismiss();
                 }
@@ -112,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Set App Title
         setTitle("Android Environmental Sensors");
 
-        // Set up button
+        // Set up count button
         pressed = true;
         final Button pauseButton = findViewById(R.id.pauseButton);
         pauseButton.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +132,70 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                    pressed = true;
                    timer.cancel();
                    pauseButton.setText("Start Resume");
+                    Toast.makeText(MainActivity.this, "Stop Counting", Toast.LENGTH_SHORT).show();
                }
+            }
+        });
+
+        // Set up upload button
+        uploadPressed = true;
+        final Button uploadButton = findViewById(R.id.uploadButton);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (uploadPressed){
+                    uploadButton.setText("Stop Upload");
+
+                    //Save charged information to GSpreadSheet
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle(R.string.upload_confirmation);
+                    builder.setIcon(android.R.drawable.ic_menu_upload);
+                    builder.setMessage(R.string.enter_your_name);
+                    nameEditText = new EditText(MainActivity.this);
+                    builder.setView(nameEditText);
+                    builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final String userName = nameEditText.getText().toString();
+
+                            final String action = "autoAddItem";
+                            //Start timer
+
+                                uploadTimer = new Timer(true);
+                                TimerTask timerTask = new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                GSpreadSheetPush.addItemToSheet(MainActivity.this, action, userName, String.valueOf(powerCharged), String.valueOf(secondCharged));
+                                            }
+                                        });
+                                    }
+                                };
+                                uploadTimer.schedule(timerTask, 0, 5000); // Update every 5 second
+                            
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+
+                    uploadPressed = false;
+                }
+                else if (!uploadPressed) {
+                    uploadPressed = true;
+                   uploadTimer.cancel();
+                    uploadButton.setText("Start Upload");
+                    Toast.makeText(MainActivity.this, "Stop Uploading", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -273,4 +340,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         };
         timer.schedule(timerTask, 50, 1000);
     }
+
 }
