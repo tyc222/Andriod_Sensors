@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.EventLog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView secondsChargedView;
     // Create EditText
     private EditText nameEditText;
+    private EditText intervalEditText;
 
     /**
      * Menu options
@@ -151,15 +153,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle(R.string.upload_confirmation);
                     builder.setIcon(android.R.drawable.ic_menu_upload);
-                    builder.setMessage(R.string.enter_your_name);
-                    nameEditText = new EditText(MainActivity.this);
-                    builder.setView(nameEditText);
+                    View view = getLayoutInflater().inflate(R.layout.dialog_update, null);
+                    nameEditText = view.findViewById(R.id.editTextUsername);
+                    intervalEditText= view.findViewById(R.id.editTextInterval);
+                    builder.setView(view);
                     builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             final String userName = nameEditText.getText().toString();
-
+                            String updateInterval = intervalEditText.getText().toString();
                             final String action = "autoAddItem";
+
+
+                            // Default Update Interval
+                            if (updateInterval.isEmpty()){
+                                updateInterval = "1200"; // 20 Minutes
+                            }
+
                             //Start timer
 
                                 uploadTimer = new Timer(true);
@@ -174,9 +184,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                         });
                                     }
                                 };
-                                uploadTimer.schedule(timerTask, 0, 5000); // Update every 5 second
-                            
-                            dialog.dismiss();
+                                uploadTimer.schedule(timerTask, 0, Integer.parseInt(updateInterval)*1000); // Update every x second(s)
+                            uploadPressed = false;
                         }
                     });
                     builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -189,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     });
                     builder.create().show();
 
-                    uploadPressed = false;
+
                 }
                 else if (!uploadPressed) {
                     uploadPressed = true;

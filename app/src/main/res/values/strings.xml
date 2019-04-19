@@ -10,8 +10,9 @@
     <string name="pause">Pause</string>
     <string name="reset_power_charged">Reset Power Charged</string>
     <string name="save_power_charged">Save Power Charged</string>
-    <string name="enter_your_name">Enter Your Name:</string>
+    <string name="enter_your_name">Please Enter Your Name:</string>
     <string name="save_confirmation">Save Confirmation</string>
     <string name="confirm">Confirm</string>
     <string name="upload_confirmation">Upload Confirmation</string>
+    <string name="enter_your_update_interval_in_seconds">Please Enter Your Update Interval In Seconds:</string>
 </resources>
