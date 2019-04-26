@@ -46,7 +46,7 @@ public static void addItemToSheet(final Context context, String uAction, String 
 
     // Request access to POST value to GSheet through google app script
     StringRequest stringRequest = new StringRequest(Request.Method.POST,
-            "https://script.google.com/macros/s/AKfycbxSghDUjSzaSnaq2KDB1-7Twp7CE0ryfHtJjij4XqfNrlBOgYa0/exec",
+            "https://script.google.com/macros/s/AKfycbylFw7a61aPA9qC0tsTwtmN5NekVoiRNu-UOiCcUbYe7ZC2WBQ/exec",
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
